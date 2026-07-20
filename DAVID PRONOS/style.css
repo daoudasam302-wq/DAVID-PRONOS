@@ -1,0 +1,107 @@
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+}
+
+header {
+    background: #1e293b;
+    padding: 20px;
+}
+
+.match {
+    background: #334155;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px;
+    background: gold;
+    border: none;
+    cursor: pointer;
+}.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background: gold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: orange;
+}button {
+    padding: 8px;
+    margin-top: 10px;
+    background: gold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: orange;
+}body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+}
+
+/* HEADER */
+header {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    color: gold;
+    font-size: 32px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* MATCH CARD */
+.match {
+    background: rgba(255,255,255,0.05);
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.match:hover {
+    transform: scale(1.03);
+}
+
+/* BUTTON */
+button {
+    background: gold;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: orange;
+}
