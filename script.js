@@ -670,3 +670,6 @@ function displayMatches(matches) {
     <strong>Gain possible : ${data.amount * data.cote} FCFA</strong>
 `;
 alert("JS connecté !");
+function ajouterMatch() {
+    alert("Bouton fonctionne !");
+}
