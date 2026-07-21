@@ -672,4 +672,6 @@ function displayMatches(matches) {
 alert("JS connecté !");
 function ajouterMatch() {
     alert("Bouton fonctionne !");
-}
+}document.getElementById("addBtn").addEventListener("click", function() {
+    alert("Ça marche !");
+});
