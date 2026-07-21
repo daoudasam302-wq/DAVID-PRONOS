@@ -1,690 +1,435 @@
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Ton pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let matchDiv = document.createElement("div");
-        matchDiv.classList.add("match");
-
-        matchDiv.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic: ${pronostic}</span>
-        `;
-
-        document.querySelector(".matches").appendChild(matchDiv);
-    }
-}function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span>
-        `;
-
-        document.body.appendChild(div);
-    }
-}function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-    }
-}// Charger les matchs sauvegardés
-window.onload = function () {
-    let data = localStorage.getItem("matches");
-
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-};
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span>
-        `;
-
-        let container = document.getElementById("matches");
-        container.appendChild(div);
-
-        // Sauvegarde
-        localStorage.setItem("matches", container.innerHTML);
-    }
-}function loadMatches() {
-    let data = localStorage.getItem("matches");
-
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-}
-
-function saveMatches() {
-    let container = document.getElementById("matches");
-    localStorage.setItem("matches", container.innerHTML);
-}
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span>
-            <br><br>
-            <button onclick="deleteMatch(this)">❌ Supprimer</button>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-        saveMatches();
-    }
-}
-
-function deleteMatch(button) {
-    button.parentElement.remove();
-    saveMatches();
-}
-
-// charger au démarrage
-window.onload = loadMatches;function loadMatches() {
-    let data = localStorage.getItem("matches");
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-}
-
-function saveMatches() {
-    localStorage.setItem("matches", document.getElementById("matches").innerHTML);
-}
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-    let vip = confirm("Match VIP ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        let vipText = vip ? "🔐 VIP" : "Gratuit";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${vip ? "🔒 Caché" : pronostic}</span><br>
-            <small>${vipText}</small><br><br>
-
-            <button onclick="editMatch(this)">✏️ Modifier</button>
-            <button onclick="deleteMatch(this)">❌ Supprimer</button>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-        saveMatches();
-    }
-}
-
-function deleteMatch(btn) {
-    btn.parentElement.remove();
-    saveMatches();
-}
-
-function editMatch(btn) {
-    let newProno = prompt("Nouveau pronostic ?");
-    if (newProno) {
-        btn.parentElement.querySelector("span").innerText = "Pronostic : " + newProno;
-        saveMatches();
-    }
-}
-
-function clearAll() {
-    if (confirm("Tout supprimer ?")) {
-        document.getElementById("matches").innerHTML = "";
-        localStorage.removeItem("matches");
-    }
-}
-
-window.onload = loadMatches;function loadMatches() {
-    let data = localStorage.getItem("matches");
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-}
-
-function saveMatches() {
-    localStorage.setItem("matches", document.getElementById("matches").innerHTML);
-}
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span><br><br>
-
-            <button onclick="editMatch(this)">✏️ Modifier</button>
-            <button onclick="deleteMatch(this)">❌ Supprimer</button>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-        saveMatches();
-    }
-}
-
-function deleteMatch(btn) {
-    btn.parentElement.remove();
-    saveMatches();
-}
-
-function editMatch(btn) {
-    let newProno = prompt("Nouveau pronostic ?");
-    if (newProno) {
-        btn.parentElement.querySelector("span").innerText = "Pronostic : " + newProno;
-        saveMatches();
-    }
-}
-
-function clearAll() {
-    if (confirm("Tout supprimer ?")) {
-        document.getElementById("matches").innerHTML = "";
-        localStorage.removeItem("matches");
-    }
-}
-
-window.onload = loadMatches;function loadMatches() {
-    let data = localStorage.getItem("matches");
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-}
-
-function saveMatches() {
-    localStorage.setItem("matches", document.getElementById("matches").innerHTML);
-}
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span><br><br>
-
-            <button onclick="editMatch(this)">✏️ Modifier</button>
-            <button onclick="deleteMatch(this)">❌ Supprimer</button>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-        saveMatches();
-    }
-}
-
-function deleteMatch(btn) {
-    btn.parentElement.remove();
-    saveMatches();
-}
-
-function editMatch(btn) {
-    let newProno = prompt("Nouveau pronostic ?");
-    if (newProno) {
-        btn.parentElement.querySelector("span").innerText = "Pronostic : " + newProno;
-        saveMatches();
-    }
-}
-
-function clearAll() {
-    if (confirm("Tout supprimer ?")) {
-        document.getElementById("matches").innerHTML = "";
-        localStorage.removeItem("matches");
-    }
-}
-
-window.onload = loadMatches;
-function loadMatches() {
-    let data = localStorage.getItem("matches");
-    if (data) {
-        document.getElementById("matches").innerHTML = data;
-    }
-}
-
-function saveMatches() {
-    localStorage.setItem("matches", document.getElementById("matches").innerHTML);
-}
-
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${team1} vs ${team2}</p>
-            <span>Pronostic : ${pronostic}</span><br><br>
-
-            <button onclick="editMatch(this)">✏️ Modifier</button>
-            <button onclick="deleteMatch(this)">❌ Supprimer</button>
-        `;
-
-        document.getElementById("matches").appendChild(div);
-        saveMatches();
-    }
-}
-
-function deleteMatch(btn) {
-    btn.parentElement.remove();
-    saveMatches();
-}
-
-function editMatch(btn) {
-    let newProno = prompt("Nouveau pronostic ?");
-    if (newProno) {
-        btn.parentElement.querySelector("span").innerText = "Pronostic : " + newProno;
-        saveMatches();
-    }
-}
-
-function clearAll() {
-    if (confirm("Tout supprimer ?")) {
-        document.getElementById("matches").innerHTML = "";
-        localStorage.removeItem("matches");
-    }
-}
-
-window.onload = loadMatches;div.innerHTML = `
-    <p>⚽ ${team1} vs ${team2}</p>
-    <span>Pronostic : ${pronostic}</span><br><br>
-
-    <button onclick="deleteMatch(this)">❌</button>
-`;
-// Exemple (tu vas avoir ton propre code)
-const firebaseConfig = {
-  apiKey: "XXXX",
-  authDomain: "XXXX",
-  projectId: "XXXX",
-};// CONFIG FIREBASE (remplace avec le tien)
-const firebaseConfig = {
-  apiKey: "TON_API_KEY",
-  authDomain: "TON_DOMAIN",
-  projectId: "TON_PROJECT_ID",
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// AJOUTER MATCH
-function addMatch() {
-    let team1 = prompt("Equipe 1 ?");
-    let team2 = prompt("Equipe 2 ?");
-    let pronostic = prompt("Pronostic ?");
-
-    if (team1 && team2 && pronostic) {
-        db.collection("matches").add({
-            team1,
-            team2,
-            pronostic
-        });
-    }
-}
-
-// AFFICHER MATCHS
-db.collection("matches").onSnapshot((snapshot) => {
-    let container = document.getElementById("matches");
-    container.innerHTML = "";
-
-    snapshot.forEach(doc => {
-        let data = doc.data();
-
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>${data.team1} vs ${data.team2}</p>
-            <span>${data.pronostic}</span>
-        `;
-
-        container.appendChild(div);
-    });
-});// SIGNUP
+// ========== DONNÉES GLOBALES ==========
+let currentUser = null;
+let selectedOdd = null;
+let selectedMatch = null;
+
+// Matchs fictifs
+const mockMatches = [
+    { id: 1, team1: "Real Madrid", team2: "Barcelona", league: "Liga", odds: { team1: 1.85, draw: 3.50, team2: 4.20 } },
+    { id: 2, team1: "PSG", team2: "Marseille", league: "Ligue 1", odds: { team1: 1.45, draw: 4.50, team2: 7.50 } },
+    { id: 3, team1: "Manchester City", team2: "Arsenal", league: "Premier League", odds: { team1: 2.10, draw: 3.40, team2: 3.50 } },
+    { id: 4, team1: "Liverpool", team2: "Chelsea", league: "Premier League", odds: { team1: 2.30, draw: 3.30, team2: 3.20 } },
+    { id: 5, team1: "Bayern Munich", team2: "Borussia Dortmund", league: "Bundesliga", odds: { team1: 1.75, draw: 3.80, team2: 5.00 } },
+];
+
+// ========== AUTHENTIFICATION ==========
 function signup() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(() => {
-        alert("Compte créé !");
-    })
-    .catch(error => alert(error.message));
-}
-
-// LOGIN
-function login() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => {
-        alert("Connecté !");
-        document.getElementById("auth").style.display = "none";
-    })
-    .catch(error => alert(error.message));
-}firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        document.getElementById("auth").style.display = "none";
-    } else {
-        document.getElementById("auth").style.display = "block";
+    if (!email || !password) {
+        alert('⚠️ Veuillez remplir tous les champs');
+        return;
     }
-});firebase.auth().createUserWithEmailAndPassword(email, password)
-.then((userCredential) => {
-    let user = userCredential.user;
 
-    db.collection("users").doc(user.uid).set({
-        balance: 10000
-    });
-});firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        db.collection("users").doc(user.uid).onSnapshot(doc => {
-            document.getElementById("balance").innerText =
-                "💰 Solde : " + doc.data().balance + " FCFA";
-        });
+    if (password.length < 4) {
+        alert('⚠️ Le mot de passe doit contenir au moins 4 caractères');
+        return;
     }
-});function createCoupon() {
-    let amount = prompt("Montant ?");
-    let match = prompt("Match ?");
-    let cote = prompt("Cote ?");
 
-    let user = firebase.auth().currentUser;
-
-    db.collection("users").doc(user.uid).get().then(doc => {
-        let balance = doc.data().balance;
-
-        if (amount > balance) {
-            alert("Solde insuffisant !");
-            return;
-        }
-
-        // retirer argent
-        db.collection("users").doc(user.uid).update({
-            balance: balance - amount
-        });
-
-        // enregistrer coupon
-        db.collection("coupons").add({
-            userId: user.uid,
-            match,
-            cote,
-            amount
-        });
-
-        alert("Coupon créé !");
-    });
-}// SURVEILLER CONNEXION
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        console.log("Connecté :", user.email);
-
-        document.getElementById("auth").style.display = "none";
-        document.getElementById("app").style.display = "block";
-
-        loadUserData(user);
-    } else {
-        document.getElementById("auth").style.display = "block";
-        document.getElementById("app").style.display = "none";
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    
+    if (users[email]) {
+        alert('⚠️ Ce compte existe déjà');
+        return;
     }
-});function signup() {
-    let email = email.value;
-    let password = password.value;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-        let user = userCredential.user;
+    users[email] = {
+        password: password,
+        balance: 10000, // 10000 FCFA au départ
+        coupons: [],
+        history: []
+    };
 
-        // créer profil utilisateur
-        db.collection("users").doc(user.uid).set({
-            balance: 10000
-        });
-
-        alert("Compte créé !");
-    })
-    .catch(err => alert(err.message));
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('✅ Compte créé avec succès ! Solde initial: 10000 FCFA');
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
 }
 
 function login() {
-    firebase.auth().signInWithEmailAndPassword(email.value, password.value)
-    .catch(err => alert(err.message));
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        alert('⚠️ Veuillez remplir tous les champs');
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    
+    if (!users[email] || users[email].password !== password) {
+        alert('⚠️ Email ou mot de passe incorrect');
+        return;
+    }
+
+    currentUser = email;
+    document.getElementById('authSection').style.display = 'none';
+    document.getElementById('appSection').style.display = 'block';
+    document.getElementById('userEmail').style.display = 'inline';
+    document.getElementById('userEmail').textContent = email;
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+    
+    loadUserData();
+    loadMatches();
 }
 
 function logout() {
-    firebase.auth().signOut();
-}function loadUserData(user) {
-    db.collection("users").doc(user.uid)
-    .onSnapshot(doc => {
-        let data = doc.data();
-
-        document.getElementById("balance").innerText =
-            "💰 Solde : " + data.balance + " FCFA";
-    });
-
-    loadUserCoupons(user);
-}function createCoupon() {
-    let user = firebase.auth().currentUser;
-
-    let amount = prompt("Montant ?");
-    let match = prompt("Match ?");
-    let cote = prompt("Cote ?");
-
-    db.collection("coupons").add({
-        userId: user.uid,
-        match,
-        cote,
-        amount,
-        date: new Date()
-    });
-
-    alert("Coupon enregistré !");
-}function loadUserCoupons(user) {
-    db.collection("coupons")
-    .where("userId", "==", user.uid)
-    .onSnapshot(snapshot => {
-        let container = document.getElementById("matches");
-        container.innerHTML = "";
-
-        snapshot.forEach(doc => {
-            let data = doc.data();
-
-            let div = document.createElement("div");
-            div.className = "match";
-
-            div.innerHTML = `
-                <p>${data.match}</p>
-                <span>${data.amount} FCFA | cote ${data.cote}</span>
-            `;
-
-            container.appendChild(div);
-        });
-    });
+    currentUser = null;
+    document.getElementById('authSection').style.display = 'block';
+    document.getElementById('appSection').style.display = 'none';
+    document.getElementById('userEmail').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'none';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
 }
-const API_KEY = "5f8bdb8a41a86dd0bc2140e5a56bf529";
 
-async function loadMatches() {
-    let response = await fetch("https://v3.football.api-sports.io/fixtures?date=2026-07-21", {
-        method: "GET",
-        headers: {
-            "x-rapidapi-key": API_KEY,
-            "x-rapidapi-host": "v3.football.api-sports.io"
-        }
-    });
+// ========== GESTION DES UTILISATEURS ==========
+function loadUserData() {
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
 
-    let data = await response.json();
+    if (!user) return;
 
-    displayMatches(data.response);
-}function displayMatches(matches) {
-    let container = document.getElementById("matches");
-    container.innerHTML = "";
-
-    matches.forEach(match => {
-        let home = match.teams.home.name;
-        let away = match.teams.away.name;
-        let time = match.fixture.date;
-
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>⚽ ${home} vs ${away}</p>
-            <span>${new Date(time).toLocaleString()}</span>
-        `;
-
-        container.appendChild(div);
-    });
-}function displayMatches(matches) {
-    let container = document.getElementById("matches");
-    container.innerHTML = "";
-
-    matches.forEach(match => {
-        let home = match.teams.home.name;
-        let away = match.teams.away.name;
-        let time = match.fixture.date;
-
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <p>⚽ ${home} vs ${away}</p>
-            <span>${new Date(time).toLocaleString()}</span>
-        `;
-
-        container.appendChild(div);
-    });
-}
-loadMatches();let today = new Date().toISOString().split("T")[0];
-
-fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`, )
-const API_KEY = "5f8bdb8a41a86dd0bc2140e5a56bf529";
-function displayMatches(matches) {
-    let container = document.getElementById("matches");
-    container.innerHTML = "";
-
-    matches.forEach(match => {
-        let home = match.homeTeam.name;
-        let away = match.awayTeam.name;
-
-        let homeLogo = match.homeTeam.logo;
-        let awayLogo = match.awayTeam.logo;
-
-        let league = match.tournament.name;
-
-        let div = document.createElement("div");
-        div.className = "match";
-
-        div.innerHTML = `
-            <h4>${league}</h4>
-
-            <div class="teams">
-                <img src="${homeLogo}" width="30"> ${home}
-                vs
-                <img src="${awayLogo}" width="30"> ${away}
-            </div>
-
-            <button onclick="selectMatch('${home} vs ${away}')">Parier</button>
-        `;
-
-        container.appendChild(div);
-    });
-}function selectMatch(match) {
-    let cote = (Math.random() * 3 + 1).toFixed(2); // cote aléatoire
-    let amount = prompt("Montant ?");
+    document.getElementById('balance').textContent = user.balance.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('couponCount').textContent = user.coupons.length;
     
-    let user = firebase.auth().currentUser;
+    loadCoupons();
+    loadHistory();
+}
 
-    db.collection("users").doc(user.uid).get().then(doc => {
-        let balance = doc.data().balance;
+function saveUserData() {
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
 
-        if (amount > balance) {
-            alert("Solde insuffisant !");
-            return;
-        }
+    if (user) {
+        localStorage.setItem('users', JSON.stringify(users));
+        loadUserData();
+    }
+}
 
-        // retirer argent
-        db.collection("users").doc(user.uid).update({
-            balance: balance - amount
-        });
+// ========== MATCHS ==========
+function loadMatches() {
+    const matchesList = document.getElementById('matchesList');
+    matchesList.innerHTML = '';
 
-        // enregistrer coupon
-        db.collection("coupons").add({
-            userId: user.uid,
-            match,
-            cote,
-            amount,
-            status: "en cours"
-        });
-
-        alert("Coupon ajouté !");
+    mockMatches.forEach(match => {
+        const matchCard = document.createElement('div');
+        matchCard.className = 'match-card';
+        
+        matchCard.innerHTML = `
+            <div class="match-header">${match.league}</div>
+            <div class="match-teams">
+                <div class="team">
+                    <div class="team-logo">⚽</div>
+                    <div class="team-name">${match.team1}</div>
+                </div>
+                <div class="vs">vs</div>
+                <div class="team">
+                    <div class="team-logo">⚽</div>
+                    <div class="team-name">${match.team2}</div>
+                </div>
+            </div>
+            <div class="match-odds">
+                <button class="odd-btn" onclick="selectOdd(${match.id}, 'team1', ${match.odds.team1})">
+                    <div class="odd-label">Victoire 1</div>
+                    <div class="odd-value">${match.odds.team1.toFixed(2)}</div>
+                </button>
+                <button class="odd-btn" onclick="selectOdd(${match.id}, 'draw', ${match.odds.draw})">
+                    <div class="odd-label">Match Nul</div>
+                    <div class="odd-value">${match.odds.draw.toFixed(2)}</div>
+                </button>
+                <button class="odd-btn" onclick="selectOdd(${match.id}, 'team2', ${match.odds.team2})">
+                    <div class="odd-label">Victoire 2</div>
+                    <div class="odd-value">${match.odds.team2.toFixed(2)}</div>
+                </button>
+            </div>
+            <button class="btn-bet" onclick="openBettingModal(${match.id}, '${match.team1} vs ${match.team2}')">🎯 Parier</button>
+        `;
+        
+        matchesList.appendChild(matchCard);
     });
-}function calculateGain(amount, cote) {
-    return (amount * cote).toFixed(0);
-}div.innerHTML = `
-    <p>${data.match}</p>
-    <span>${data.amount} FCFA | cote ${data.cote}</span>
-    <strong>Gain possible : ${data.amount * data.cote} FCFA</strong>
-`;
-alert("JS connecté !");
-function ajouterMatch() {
-    alert("Bouton fonctionne !");
-}document.getElementById("addBtn").addEventListener("click", function() {
-    alert("Ça marche !");
-});
-document.addEventListener("DOMContentLoaded", function() {
+}
 
-    console.log("JS chargé ✅");
+function selectOdd(matchId, oddType, oddValue) {
+    selectedMatch = matchId;
+    selectedOdd = { type: oddType, value: oddValue };
+    
+    // Mettre à jour l'UI
+    document.querySelectorAll('.odd-btn').forEach(btn => btn.classList.remove('selected'));
+    event.target.closest('.odd-btn').classList.add('selected');
+}
 
-    const btn = document.getElementById("addBtn");
+// ========== MODAL PARIS ==========
+function openBettingModal(matchId, matchTitle) {
+    selectedMatch = matchId;
+    document.getElementById('matchTitle').textContent = '⚽ ' + matchTitle;
+    document.getElementById('bettingModal').style.display = 'flex';
+    document.getElementById('bettingAmount').value = '1000';
+    updateCalculatedGain();
+}
 
-    if (btn) {
-        btn.addEventListener("click", function() {
-            alert("Bouton OK !");
-        });
+function closeBettingModal() {
+    document.getElementById('bettingModal').style.display = 'none';
+    selectedOdd = null;
+}
+
+document.getElementById('bettingAmount')?.addEventListener('input', updateCalculatedGain);
+
+function updateCalculatedGain() {
+    if (!selectedOdd) return;
+
+    const amount = parseInt(document.getElementById('bettingAmount').value) || 0;
+    const gain = Math.floor(amount * selectedOdd.value);
+
+    document.getElementById('calculatedGain').innerHTML = 
+        `Gain potentiel: <strong>${gain.toLocaleString('fr-FR')} FCFA</strong>`;
+}
+
+function placeBet() {
+    if (!selectedOdd) {
+        alert('⚠️ Veuillez sélectionner une cote');
+        return;
     }
 
+    const amount = parseInt(document.getElementById('bettingAmount').value) || 0;
+    
+    if (amount < 100 || amount > 50000) {
+        alert('⚠️ Le montant doit être entre 100 et 50000 FCFA');
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+
+    if (user.balance < amount) {
+        alert('⚠️ Solde insuffisant !');
+        return;
+    }
+
+    // Créer le coupon
+    const coupon = {
+        id: Date.now(),
+        matchId: selectedMatch,
+        match: document.getElementById('matchTitle').textContent.replace('⚽ ', ''),
+        amount: amount,
+        odd: selectedOdd.value,
+        potentialGain: Math.floor(amount * selectedOdd.value),
+        oddType: selectedOdd.type,
+        date: new Date().toLocaleString('fr-FR'),
+        status: 'pending'
+    };
+
+    user.coupons.push(coupon);
+    user.balance -= amount;
+
+    // Enregistrer l'historique
+    user.history.push({
+        type: 'bet',
+        amount: amount,
+        description: `Pari sur ${coupon.match}`,
+        date: new Date().toLocaleString('fr-FR')
+    });
+
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    alert('✅ Pari placé avec succès !');
+    closeBettingModal();
+    loadUserData();
+}
+
+// ========== COUPONS ==========
+function loadCoupons() {
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+
+    const couponsList = document.getElementById('couponsList');
+    const couponStats = document.getElementById('couponStats');
+
+    couponsList.innerHTML = '';
+
+    if (user.coupons.length === 0) {
+        couponsList.innerHTML = '<p style="color: #94a3b8; text-align: center;">Aucun coupon pour le moment</p>';
+        couponStats.style.display = 'none';
+        return;
+    }
+
+    couponStats.style.display = 'block';
+
+    let totalStake = 0;
+    let totalPotentialGain = 0;
+
+    user.coupons.forEach(coupon => {
+        totalStake += coupon.amount;
+        totalPotentialGain += coupon.potentialGain;
+
+        const couponCard = document.createElement('div');
+        couponCard.className = 'coupon-card';
+
+        const statusClass = coupon.status === 'pending' ? 'status-pending' : 
+                          coupon.status === 'won' ? 'status-won' : 'status-lost';
+        const statusText = coupon.status === 'pending' ? 'En Attente' : 
+                          coupon.status === 'won' ? 'Gagnée' : 'Perdue';
+
+        couponCard.innerHTML = `
+            <div class="coupon-match">🎯 ${coupon.match}</div>
+            <div class="coupon-details">
+                <span>Mise: <strong>${coupon.amount.toLocaleString('fr-FR')} FCFA</strong></span>
+                <span>Cote: <strong>@${coupon.odd.toFixed(2)}</strong></span>
+            </div>
+            <div class="coupon-details">
+                <span>Gain potentiel: <strong>${coupon.potentialGain.toLocaleString('fr-FR')} FCFA</strong></span>
+                <span class="coupon-status ${statusClass}">${statusText}</span>
+            </div>
+            <small style="color: #94a3b8;">${coupon.date}</small>
+            <button class="btn-remove" onclick="removeCoupon(${coupon.id})">❌ Annuler</button>
+        `;
+
+        couponsList.appendChild(couponCard);
+    });
+
+    document.getElementById('totalStake').textContent = totalStake.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('potentialGain').textContent = totalPotentialGain.toLocaleString('fr-FR') + ' FCFA';
+}
+
+function removeCoupon(couponId) {
+    if (!confirm('Êtes-vous sûr de vouloir annuler ce coupon ?')) return;
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+
+    const coupon = user.coupons.find(c => c.id === couponId);
+    if (!coupon) return;
+
+    // Rembourser le montant
+    user.balance += coupon.amount;
+
+    // Supprimer le coupon
+    user.coupons = user.coupons.filter(c => c.id !== couponId);
+
+    // Enregistrer l'historique
+    user.history.push({
+        type: 'refund',
+        amount: coupon.amount,
+        description: `Remboursement d'un coupon (${coupon.match})`,
+        date: new Date().toLocaleString('fr-FR')
+    });
+
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('✅ Coupon annulé et remboursé');
+    loadUserData();
+}
+
+function validateAllCoupons() {
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+
+    user.coupons.forEach(coupon => {
+        // Simulation aléatoire
+        const won = Math.random() > 0.5;
+        coupon.status = won ? 'won' : 'lost';
+
+        if (won) {
+            user.balance += coupon.potentialGain;
+            user.history.push({
+                type: 'win',
+                amount: coupon.potentialGain,
+                description: `Victoire sur ${coupon.match}`,
+                date: new Date().toLocaleString('fr-FR')
+            });
+        } else {
+            user.history.push({
+                type: 'loss',
+                amount: -coupon.amount,
+                description: `Défaite sur ${coupon.match}`,
+                date: new Date().toLocaleString('fr-FR')
+            });
+        }
+    });
+
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('✅ Coupons validés !');
+    loadUserData();
+}
+
+function deleteAllCoupons() {
+    if (!confirm('Êtes-vous sûr de vouloir annuler TOUS les coupons ?')) return;
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+
+    // Calculer le remboursement total
+    let totalRefund = user.coupons.reduce((sum, c) => sum + c.amount, 0);
+
+    user.balance += totalRefund;
+    user.coupons = [];
+
+    user.history.push({
+        type: 'refund',
+        amount: totalRefund,
+        description: 'Annulation de tous les coupons',
+        date: new Date().toLocaleString('fr-FR')
+    });
+
+    localStorage.setItem('users', JSON.stringify(users));
+    alert(`✅ ${totalRefund.toLocaleString('fr-FR')} FCFA remboursés`);
+    loadUserData();
+}
+
+// ========== HISTORIQUE ==========
+function loadHistory() {
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+    const historyList = document.getElementById('historyList');
+
+    historyList.innerHTML = '';
+
+    if (user.history.length === 0) {
+        historyList.innerHTML = '<p style="color: #94a3b8; text-align: center;">Aucune transaction</p>';
+        return;
+    }
+
+    // Afficher en ordre inverse (plus récent d'abord)
+    user.history.slice().reverse().forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+
+        const amountClass = item.amount > 0 ? 'amount-in' : 'amount-out';
+        const sign = item.amount > 0 ? '+' : '';
+
+        historyItem.innerHTML = `
+            <div class="history-text">
+                <div class="history-date">${item.date}</div>
+                <div>${item.description}</div>
+            </div>
+            <div class="history-amount ${amountClass}">
+                ${sign}${item.amount.toLocaleString('fr-FR')} FCFA
+            </div>
+        `;
+
+        historyList.appendChild(historyItem);
+    });
+}
+
+// ========== NAVIGATION TABS ==========
+function showTab(tabName) {
+    // Cacher tous les tabs
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+    // Afficher le tab actif
+    document.getElementById(tabName + 'Tab').classList.add('active');
+    event.target.classList.add('active');
+}
+
+// ========== INITIALISATION ==========
+window.addEventListener('load', () => {
+    // Vérifier si l'utilisateur est déjà connecté
+    const urlParams = new URLSearchParams(window.location.search);
+    const autoLogin = urlParams.get('login');
+
+    if (autoLogin) {
+        document.getElementById('email').value = 'test@example.com';
+        document.getElementById('password').value = 'test123';
+    }
 });
