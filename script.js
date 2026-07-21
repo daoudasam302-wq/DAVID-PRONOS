@@ -669,3 +669,4 @@ function displayMatches(matches) {
     <span>${data.amount} FCFA | cote ${data.cote}</span>
     <strong>Gain possible : ${data.amount * data.cote} FCFA</strong>
 `;
+alert("JS connecté !");
