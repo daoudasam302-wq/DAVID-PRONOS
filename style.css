@@ -1,0 +1,172 @@
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+}
+
+header {
+    background: #1e293b;
+    padding: 20px;
+}
+
+.match {
+    background: #334155;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px;
+    background: gold;
+    border: none;
+    cursor: pointer;
+}.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background: gold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: orange;
+}button {
+    padding: 8px;
+    margin-top: 10px;
+    background: gold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: orange;
+}body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+}
+
+/* HEADER */
+header {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    color: gold;
+    font-size: 32px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* MATCH CARD */
+.match {
+    background: rgba(255,255,255,0.05);
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.match:hover {
+    transform: scale(1.03);
+}
+
+/* BUTTON */
+button {
+    background: gold;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: orange;
+}p {
+    opacity: 0.9;
+}
+
+.match span {
+    color: gold;
+    font-weight: bold;
+}body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0b0f1a;
+    color: white;
+}
+
+/* HEADER */
+.header {
+    background: #111827;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid gold;
+}
+
+.header h1 {
+    color: gold;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px;
+}
+
+/* MATCH CARD */
+.match {
+    background: #111827;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid gold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.match p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.match span {
+    color: gold;
+    font-weight: bold;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: gold;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+}.teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
