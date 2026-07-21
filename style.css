@@ -1,172 +1,639 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0b0f1a 0%, #1a202c 100%);
+    color: #ffffff;
+    min-height: 100vh;
 }
 
-header {
-    background: #1e293b;
-    padding: 20px;
-}
-
-.match {
-    background: #334155;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-button {
-    padding: 10px;
-    background: gold;
-    border: none;
-    cursor: pointer;
-}.container {
-    max-width: 500px;
-    margin: auto;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px;
-    background: gold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-button:hover {
-    background: orange;
-}button {
-    padding: 8px;
-    margin-top: 10px;
-    background: gold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: orange;
-}body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: white;
-}
-
-/* HEADER */
-header {
-    background: rgba(0,0,0,0.3);
-    padding: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-}
-
-header h1 {
-    color: gold;
-    font-size: 32px;
-}
-
-/* CONTAINER */
 .container {
-    max-width: 500px;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-/* MATCH CARD */
-.match {
-    background: rgba(255,255,255,0.05);
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 15px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    transition: 0.3s;
+/* ========== NAVIGATION ========== */
+.navbar {
+    background: rgba(17, 24, 39, 0.95);
+    border-bottom: 3px solid #fbbf24;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.match:hover {
-    transform: scale(1.03);
-}
-
-/* BUTTON */
-button {
-    background: gold;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background: orange;
-}p {
-    opacity: 0.9;
-}
-
-.match span {
-    color: gold;
-    font-weight: bold;
-}body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #0b0f1a;
-    color: white;
-}
-
-/* HEADER */
-.header {
-    background: #111827;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 2px solid gold;
-}
-
-.header h1 {
-    color: gold;
-}
-
-/* CONTAINER */
-.container {
-    padding: 20px;
-}
-
-/* MATCH CARD */
-.match {
-    background: #111827;
-    margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 12px;
-    border-left: 4px solid gold;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-
-.match p {
-    font-size: 16px;
-    margin: 0;
-}
-
-.match span {
-    color: gold;
-    font-weight: bold;
-}
-
-/* BUTTON */
-button {
-    width: 100%;
-    padding: 12px;
-    background: gold;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    margin-top: 10px;
-}.teams {
+.navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+.user-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#userEmail {
+    color: #fbbf24;
+    font-weight: 500;
+}
+
+/* ========== AUTHENTIFICATION ========== */
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0b0f1a 0%, #1a202c 100%);
+}
+
+.auth-container {
+    background: rgba(17, 24, 39, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #fbbf24;
+}
+
+.auth-container h1 {
+    color: #fbbf24;
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.auth-container p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #cbd5e1;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-form input {
+    padding: 12px;
+    border: 2px solid #334155;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+}
+
+.warning {
+    text-align: center;
+    color: #f87171;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+/* ========== BUTTONS ========== */
+button {
+    cursor: pointer;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.btn-login, .btn-signup {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+}
+
+.btn-login {
+    background: #fbbf24;
+    color: #0b0f1a;
+    margin-bottom: 10px;
+}
+
+.btn-login:hover {
+    background: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3);
+}
+
+.btn-signup {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    border: 2px solid #fbbf24;
+}
+
+.btn-signup:hover {
+    background: #fbbf24;
+    color: #0b0f1a;
+}
+
+#logoutBtn {
+    background: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+#logoutBtn:hover {
+    background: #dc2626;
+}
+
+/* ========== APP SECTION ========== */
+#appSection {
+    padding: 20px 0;
+}
+
+.balance-bar {
+    background: rgba(17, 24, 39, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #fbbf24;
+}
+
+.balance-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.balance-label {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.balance-amount {
+    font-size: 28px;
+    color: #10b981;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.coupons-count {
+    font-size: 16px;
+    color: #fbbf24;
+}
+
+/* ========== TABS ========== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #1e293b;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    background: transparent;
+    color: #94a3b8;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    color: #fbbf24;
+    border-bottom-color: #fbbf24;
+}
+
+.tab-btn:hover {
+    color: #fbbf24;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ========== MATCHES GRID ========== */
+.tab-content h2 {
+    margin-bottom: 20px;
+    color: #fbbf24;
+    font-size: 24px;
+}
+
+.matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.match-card {
+    background: rgba(17, 24, 39, 0.8);
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.match-card:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+    transform: translateY(-5px);
+}
+
+.match-header {
+    color: #94a3b8;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.match-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.team {
+    text-align: center;
+    flex: 1;
+}
+
+.team-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.team-logo {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.vs {
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+.match-odds {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.odd-btn {
+    flex: 1;
+    padding: 12px;
+    background: rgba(251, 191, 36, 0.1);
+    border: 2px solid #fbbf24;
+    color: #fbbf24;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.odd-btn:hover {
+    background: #fbbf24;
+    color: #0b0f1a;
+}
+
+.odd-btn.selected {
+    background: #fbbf24;
+    color: #0b0f1a;
+}
+
+.odd-label {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.odd-value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-bet {
+    width: 100%;
+    background: #10b981;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.btn-bet:hover {
+    background: #059669;
+}
+
+/* ========== COUPONS ========== */
+.coupons-container {
+    display: flex;
+    gap: 20px;
+}
+
+.coupons-list {
+    flex: 1;
+}
+
+.coupon-card {
+    background: rgba(17, 24, 39, 0.8);
+    border-left: 5px solid #fbbf24;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.coupon-match {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.coupon-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.coupon-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fbbf24;
+    color: #0b0f1a;
+}
+
+.status-won {
+    background: #10b981;
+    color: white;
+}
+
+.status-lost {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-remove {
+    background: #ef4444;
+    color: white;
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.btn-remove:hover {
+    background: #dc2626;
+}
+
+.coupon-stats {
+    background: rgba(17, 24, 39, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #fbbf24;
+}
+
+.coupon-stats h3 {
+    color: #fbbf24;
+    margin-bottom: 15px;
+}
+
+.coupon-stats p {
+    margin-bottom: 10px;
+    color: #cbd5e1;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+/* ========== HISTORIQUE ========== */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-item {
+    background: rgba(17, 24, 39, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-text {
+    flex: 1;
+}
+
+.history-date {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.history-amount {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.amount-in {
+    color: #10b981;
+}
+
+.amount-out {
+    color: #ef4444;
+}
+
+/* ========== MODAL ========== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal-content {
+    background: rgba(17, 24, 39, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    border: 2px solid #fbbf24;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fbbf24;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #f59e0b;
+}
+
+.modal-content h2 {
+    color: #fbbf24;
+    margin-bottom: 20px;
+}
+
+.odds-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.odds-option {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #334155;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.odds-option:hover {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+}
+
+.odds-option.selected {
+    background: #fbbf24;
+    color: #0b0f1a;
+    border-color: #fbbf24;
+}
+
+.betting-form {
+    margin-top: 20px;
+}
+
+.betting-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+.betting-form input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #334155;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.betting-form input:focus {
+    outline: none;
+    border-color: #fbbf24;
+}
+
+.calculated-gain {
+    background: rgba(16, 185, 129, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: #10b981;
+}
+
+.btn-cancel {
+    background: #6b7280;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-cancel:hover {
+    background: #4b5563;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .matches-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .balance-bar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .coupons-container {
+        flex-direction: column;
+    }
 }
