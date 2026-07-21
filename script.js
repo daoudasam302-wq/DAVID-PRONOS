@@ -675,3 +675,16 @@ function ajouterMatch() {
 }document.getElementById("addBtn").addEventListener("click", function() {
     alert("Ça marche !");
 });
+document.addEventListener("DOMContentLoaded", function() {
+
+    console.log("JS chargé ✅");
+
+    const btn = document.getElementById("addBtn");
+
+    if (btn) {
+        btn.addEventListener("click", function() {
+            alert("Bouton OK !");
+        });
+    }
+
+});
