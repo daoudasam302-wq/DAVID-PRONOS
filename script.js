@@ -2,14 +2,21 @@
 let currentUser = null;
 let selectedOdd = null;
 let selectedMatch = null;
+let currentBetMatch = null;
+let apiFootballKey = localStorage.getItem('apiFootballKey') || '5f8bdb8a41a86dd0bc2140e5a56bf529';
 
-// Matchs fictifs
+// Matchs fictifs avec catégories : live, à venir et historiques
 const mockMatches = [
-    { id: 1, team1: "Real Madrid", team2: "Barcelona", league: "Liga", odds: { team1: 1.85, draw: 3.50, team2: 4.20 } },
-    { id: 2, team1: "PSG", team2: "Marseille", league: "Ligue 1", odds: { team1: 1.45, draw: 4.50, team2: 7.50 } },
-    { id: 3, team1: "Manchester City", team2: "Arsenal", league: "Premier League", odds: { team1: 2.10, draw: 3.40, team2: 3.50 } },
-    { id: 4, team1: "Liverpool", team2: "Chelsea", league: "Premier League", odds: { team1: 2.30, draw: 3.30, team2: 3.20 } },
-    { id: 5, team1: "Bayern Munich", team2: "Borussia Dortmund", league: "Bundesliga", odds: { team1: 1.75, draw: 3.80, team2: 5.00 } },
+    { id: 1, team1: "Real Madrid", team2: "Barcelona", league: "Liga", status: "live", minute: "67'", score: "2 - 1", date: "En direct", odds: { team1: 1.85, draw: 3.50, team2: 4.20 } },
+    { id: 2, team1: "PSG", team2: "Marseille", league: "Ligue 1", status: "live", minute: "45'", score: "1 - 0", date: "En direct", odds: { team1: 1.45, draw: 4.50, team2: 7.50 } },
+    { id: 3, team1: "Manchester City", team2: "Arsenal", league: "Premier League", status: "upcoming", date: "Ce soir 20:45", odds: { team1: 2.10, draw: 3.40, team2: 3.50 } },
+    { id: 4, team1: "Liverpool", team2: "Chelsea", league: "Premier League", status: "upcoming", date: "Demain 18:30", odds: { team1: 2.30, draw: 3.30, team2: 3.20 } },
+    { id: 5, team1: "Bayern Munich", team2: "Borussia Dortmund", league: "Bundesliga", status: "upcoming", date: "Samedi 17:30", odds: { team1: 1.75, draw: 3.80, team2: 5.00 } },
+    { id: 6, team1: "Inter Milan", team2: "Juventus", league: "Serie A", status: "history", date: "Hier 21:00", result: "3 - 2", odds: { team1: 2.80, draw: 3.10, team2: 2.60 } },
+    { id: 7, team1: "Olympique Lyon", team2: "Nice", league: "Ligue 1", status: "history", date: "Avant-hier 19:00", result: "1 - 1", odds: { team1: 2.20, draw: 3.40, team2: 2.90 } },
+    { id: 8, team1: "Atletico Madrid", team2: "Sevilla", league: "Liga", status: "history", date: "Hier 20:00", result: "2 - 0", odds: { team1: 1.95, draw: 3.45, team2: 3.80 } },
+    { id: 9, team1: "AC Milan", team2: "Napoli", league: "Serie A", status: "upcoming", date: "Dimanche 19:00", odds: { team1: 2.50, draw: 3.20, team2: 2.70 } },
+    { id: 10, team1: "Ajax", team2: "Feyenoord", league: "Eredivisie", status: "history", date: "Hier 18:45", result: "0 - 0", odds: { team1: 2.15, draw: 3.35, team2: 3.00 } }
 ];
 
 // ========== AUTHENTIFICATION ==========
@@ -109,72 +116,211 @@ function saveUserData() {
 }
 
 // ========== MATCHS ==========
-function loadMatches() {
-    const matchesList = document.getElementById('matchesList');
-    matchesList.innerHTML = '';
+function buildMatchCard(match) {
+    const card = document.createElement('div');
+    card.className = 'match-card';
 
-    mockMatches.forEach(match => {
-        const matchCard = document.createElement('div');
-        matchCard.className = 'match-card';
-        
-        matchCard.innerHTML = `
-            <div class="match-header">${match.league}</div>
-            <div class="match-teams">
-                <div class="team">
-                    <div class="team-logo">⚽</div>
-                    <div class="team-name">${match.team1}</div>
-                </div>
-                <div class="vs">vs</div>
-                <div class="team">
-                    <div class="team-logo">⚽</div>
-                    <div class="team-name">${match.team2}</div>
-                </div>
+    let statusBadge = '';
+    let metaInfo = '';
+
+    if (match.status === 'live') {
+        statusBadge = '<span class="match-badge live">🔴 En direct</span>';
+        metaInfo = `<div class="match-meta">${match.minute} • Score : ${match.score}</div>`;
+    } else if (match.status === 'upcoming') {
+        statusBadge = '<span class="match-badge upcoming">⏳ À venir</span>';
+        metaInfo = `<div class="match-meta">${match.date}</div>`;
+    } else {
+        statusBadge = '<span class="match-badge history">🕘 Historique</span>';
+        metaInfo = `<div class="match-meta">${match.date} • Résultat : ${match.result}</div>`;
+    }
+
+    card.innerHTML = `
+        <div class="match-header">
+            <span>${match.league}</span>
+            ${statusBadge}
+        </div>
+        <div class="match-teams">
+            <div class="team">
+                <div class="team-logo">⚽</div>
+                <div class="team-name">${match.team1}</div>
             </div>
-            <div class="match-odds">
-                <button class="odd-btn" onclick="selectOdd(${match.id}, 'team1', ${match.odds.team1})">
-                    <div class="odd-label">Victoire 1</div>
-                    <div class="odd-value">${match.odds.team1.toFixed(2)}</div>
-                </button>
-                <button class="odd-btn" onclick="selectOdd(${match.id}, 'draw', ${match.odds.draw})">
-                    <div class="odd-label">Match Nul</div>
-                    <div class="odd-value">${match.odds.draw.toFixed(2)}</div>
-                </button>
-                <button class="odd-btn" onclick="selectOdd(${match.id}, 'team2', ${match.odds.team2})">
-                    <div class="odd-label">Victoire 2</div>
-                    <div class="odd-value">${match.odds.team2.toFixed(2)}</div>
-                </button>
+            <div class="vs">vs</div>
+            <div class="team">
+                <div class="team-logo">⚽</div>
+                <div class="team-name">${match.team2}</div>
             </div>
-            <button class="btn-bet" onclick="openBettingModal(${match.id}, '${match.team1} vs ${match.team2}')">🎯 Parier</button>
-        `;
-        
-        matchesList.appendChild(matchCard);
+        </div>
+        ${metaInfo}
+        <div class="market-strip">
+            <button class="market-pill" onclick="quickBet(${match.id}, '${match.team1} vs ${match.team2}', ${JSON.stringify(match)}, 'team1', 'Victoire 1', ${match.odds.team1})">1 • ${match.odds.team1.toFixed(2)}</button>
+            <button class="market-pill" onclick="quickBet(${match.id}, '${match.team1} vs ${match.team2}', ${JSON.stringify(match)}, 'draw', 'Match nul', ${match.odds.draw})">N • ${match.odds.draw.toFixed(2)}</button>
+            <button class="market-pill" onclick="quickBet(${match.id}, '${match.team1} vs ${match.team2}', ${JSON.stringify(match)}, 'team2', 'Victoire 2', ${match.odds.team2})">2 • ${match.odds.team2.toFixed(2)}</button>
+        </div>
+        <div class="market-tags">
+            <span>1X2</span>
+            <span>Double chance</span>
+            <span>BTTS</span>
+            <span>Over 2.5</span>
+        </div>
+        <button class="btn-bet" onclick="openBettingModal(${match.id}, '${match.team1} vs ${match.team2}', ${JSON.stringify(match)})">🎯 Voir tous les marchés</button>
+    `;
+
+    return card;
+}
+
+async function loadMatches() {
+    const matchesList = document.getElementById('matchesList');
+    matchesList.innerHTML = '<p style="color:#94a3b8;">Chargement des matchs réels...</p>';
+
+    let matchesToRender = [];
+
+    if (apiFootballKey) {
+        try {
+            const today = new Date();
+            const from = today.toISOString().slice(0, 10);
+            const to = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+            const response = await fetch(`https://v3.football.api-sports.io/fixtures?from=${from}&to=${to}`, {
+                headers: {
+                    'x-rapidapi-key': apiFootballKey,
+                    'x-rapidapi-host': 'v3.football.api-sports.io',
+                    'x-apisports-key': apiFootballKey
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const fixtures = data.response || [];
+
+                matchesToRender = fixtures.slice(0, 30).map(f => {
+                    const status = f.fixture.status.short;
+                    let matchStatus = 'upcoming';
+                    let meta = f.fixture.date ? new Date(f.fixture.date).toLocaleString('fr-FR', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'À venir';
+
+                    if (['1H', '2H', 'ET', 'HT', 'LIVE', 'AET', 'P'].includes(status)) {
+                        matchStatus = 'live';
+                        meta = `${f.fixture.status.elapsed || ''} • Score : ${f.goals.home ?? 0} - ${f.goals.away ?? 0}`;
+                    } else if (['FT', 'AET', 'PEN'].includes(status)) {
+                        matchStatus = 'history';
+                        meta = `Terminé • Résultat : ${f.goals.home ?? 0} - ${f.goals.away ?? 0}`;
+                    }
+
+                    return {
+                        id: f.fixture.id,
+                        team1: f.teams.home.name,
+                        team2: f.teams.away.name,
+                        league: f.league.name,
+                        status: matchStatus,
+                        date: meta,
+                        minute: f.fixture.status.elapsed ? `${f.fixture.status.elapsed}'` : '',
+                        score: `${f.goals.home ?? 0} - ${f.goals.away ?? 0}`,
+                        result: `${f.goals.home ?? 0} - ${f.goals.away ?? 0}`,
+                        odds: { team1: 1.85, draw: 3.40, team2: 2.95 }
+                    };
+                });
+            }
+        } catch (error) {
+            console.warn('API-Football indisponible :', error);
+        }
+    }
+
+    if (matchesToRender.length === 0) {
+        matchesList.innerHTML = '<p style="color:#f87171;">Aucune fixture réelle n’a pu être chargée pour le moment.</p>';
+        return;
+    }
+
+    const sections = [
+        { title: '🔴 En direct', matches: matchesToRender.filter(m => m.status === 'live') },
+        { title: '⏳ À venir', matches: matchesToRender.filter(m => m.status === 'upcoming') },
+        { title: '🕘 Matchs d\'avant / historiques', matches: matchesToRender.filter(m => m.status === 'history') }
+    ];
+
+    sections.forEach(section => {
+        if (section.matches.length === 0) return;
+
+        const sectionWrap = document.createElement('div');
+        sectionWrap.className = 'match-section';
+
+        sectionWrap.innerHTML = `<h3>${section.title}</h3>`;
+        const grid = document.createElement('div');
+        grid.className = 'matches-grid';
+
+        section.matches.forEach(match => grid.appendChild(buildMatchCard(match)));
+        sectionWrap.appendChild(grid);
+        matchesList.appendChild(sectionWrap);
     });
 }
 
 function selectOdd(matchId, oddType, oddValue) {
     selectedMatch = matchId;
     selectedOdd = { type: oddType, value: oddValue };
-    
-    // Mettre à jour l'UI
+
+    const clickedBtn = event?.currentTarget || event?.target?.closest('.odd-btn');
     document.querySelectorAll('.odd-btn').forEach(btn => btn.classList.remove('selected'));
-    event.target.closest('.odd-btn').classList.add('selected');
+    if (clickedBtn) {
+        clickedBtn.classList.add('selected');
+    }
 }
 
 // ========== MODAL PARIS ==========
-function openBettingModal(matchId, matchTitle) {
+function quickBet(matchId, matchTitle, matchData, type, label, value) {
+    openBettingModal(matchId, matchTitle, matchData, type, label, value);
+}
+
+function openBettingModal(matchId, matchTitle, matchData, type = null, label = null, value = null) {
     selectedMatch = matchId;
+    currentBetMatch = matchData || { title: matchTitle };
     document.getElementById('matchTitle').textContent = '⚽ ' + matchTitle;
     document.getElementById('bettingModal').style.display = 'flex';
     document.getElementById('bettingAmount').value = '1000';
+    renderBettingOptions(matchData, type, label, value);
     updateCalculatedGain();
 }
 
 function closeBettingModal() {
     document.getElementById('bettingModal').style.display = 'none';
     selectedOdd = null;
+    document.getElementById('oddsContainer').innerHTML = '';
 }
 
 document.getElementById('bettingAmount')?.addEventListener('input', updateCalculatedGain);
+
+function renderBettingOptions(matchData, type = null, label = null, value = null) {
+    const container = document.getElementById('oddsContainer');
+    container.innerHTML = '';
+
+    const options = [
+        { label: 'Victoire 1', value: matchData?.odds?.team1 || 1.85, key: 'team1' },
+        { label: 'Match nul', value: matchData?.odds?.draw || 3.40, key: 'draw' },
+        { label: 'Victoire 2', value: matchData?.odds?.team2 || 2.95, key: 'team2' },
+        { label: 'Double chance (1N)', value: 1.45, key: 'double' },
+        { label: 'Both teams to score', value: 1.70, key: 'btts' },
+        { label: 'Plus de 2.5 buts', value: 1.60, key: 'over25' },
+        { label: '1er buteur', value: 3.20, key: 'firstscorer' },
+        { label: 'Score exact 1-0', value: 7.50, key: 'score10' }
+    ];
+
+    options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'odds-option';
+        btn.innerHTML = `<strong>${option.label}</strong><span>@${option.value.toFixed(2)}</span>`;
+        btn.onclick = () => {
+            selectedOdd = { type: option.key, value: option.value, label: option.label };
+            document.querySelectorAll('.odds-option').forEach(el => el.classList.remove('selected'));
+            btn.classList.add('selected');
+            updateCalculatedGain();
+        };
+        if (type && option.key === type) {
+            btn.classList.add('selected');
+            selectedOdd = { type: option.key, value: value || option.value, label: label || option.label };
+        }
+        container.appendChild(btn);
+    });
+}
 
 function updateCalculatedGain() {
     if (!selectedOdd) return;
@@ -216,6 +362,7 @@ function placeBet() {
         odd: selectedOdd.value,
         potentialGain: Math.floor(amount * selectedOdd.value),
         oddType: selectedOdd.type,
+        betLabel: selectedOdd.label,
         date: new Date().toLocaleString('fr-FR'),
         status: 'pending'
     };
@@ -276,6 +423,9 @@ function loadCoupons() {
             <div class="coupon-details">
                 <span>Mise: <strong>${coupon.amount.toLocaleString('fr-FR')} FCFA</strong></span>
                 <span>Cote: <strong>@${coupon.odd.toFixed(2)}</strong></span>
+            </div>
+            <div class="coupon-details">
+                <span>Pari: <strong>${coupon.betLabel || 'Type de pari'}</strong></span>
             </div>
             <div class="coupon-details">
                 <span>Gain potentiel: <strong>${coupon.potentialGain.toLocaleString('fr-FR')} FCFA</strong></span>
@@ -432,4 +582,4 @@ window.addEventListener('load', () => {
         document.getElementById('email').value = 'test@example.com';
         document.getElementById('password').value = 'test123';
     }
-});
+}); 
