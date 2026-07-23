@@ -20,68 +20,149 @@
 
     <!-- SECTION AUTHENTIFICATION -->
     <div id="authSection" class="auth-section">
-        <div class="auth-container">
-            <h1>🔥 Elite Pronos</h1>
-            <p>Gagnez gros avec les meilleurs pronostics !</p>
-            
-            <div class="auth-form">
-                <input type="email" id="email" placeholder="📧 Email" required>
-                <input type="password" id="password" placeholder="🔒 Mot de passe" required>
-                
-                <button onclick="login()" class="btn-login">Se Connecter</button>
-                <button onclick="signup()" class="btn-signup">Créer un Compte</button>
+        <div class="auth-shell">
+            <div class="auth-hero">
+                <div class="auth-badge">⚡ Simulateur de paris sportifs</div>
+                <h1>Bienvenue sur Elite Pronos</h1>
+                <p>Accédez à des matchs live, des cotes premium et des coupons fictifs comme sur une vraie plateforme bookmaker.</p>
+                <div class="auth-features">
+                    <span>⚽ Matchs live</span>
+                    <span>🎯 Cotes rapides</span>
+                    <span>💸 Coupons fictifs</span>
+                </div>
+                <div class="auth-steps">
+                    <div>1. Créez votre compte</div>
+                    <div>2. Choisissez votre pari</div>
+                    <div>3. Gérez votre coupon</div>
+                </div>
             </div>
-            
-            <p class="warning">⚠️ Ceci est une simulation avec argent fictif</p>
+
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-mode="login" onclick="showAuthMode('login')">Connexion</button>
+                    <button class="auth-tab" data-mode="signup" onclick="showAuthMode('signup')">Créer un compte</button>
+                </div>
+
+                <h3 id="authTitle">Connexion</h3>
+                <div class="auth-form">
+                    <input type="email" id="email" placeholder="📧 Email" required>
+                    <input type="password" id="password" placeholder="🔒 Mot de passe" required>
+                    <button id="authPrimaryBtn" onclick="login()" class="btn-login">Se connecter</button>
+                    <button id="authSecondaryBtn" onclick="showAuthMode('signup')" class="btn-signup">Créer un compte</button>
+                </div>
+
+                <p class="warning">⚠️ Ceci est une simulation avec argent fictif</p>
+            </div>
         </div>
     </div>
 
     <!-- SECTION APPLICATION PRINCIPALE -->
     <div id="appSection" style="display:none;">
         <div class="container">
-            <!-- BARRE DE SOLDE -->
-            <div class="balance-bar">
-                <div class="balance-info">
-                    <span class="balance-label">💰 Solde Disponible</span>
-                    <span id="balance" class="balance-amount">0 FCFA</span>
+            <div class="hero-banner">
+                <div class="hero-content">
+                    <div class="hero-pill">⚡ Paris du moment</div>
+                    <h2>Le simulateur sportif le plus immersif</h2>
+                    <p>Créez vos coupons comme sur un vrai bookmaker avec des matchs live, à venir et historiques.</p>
+                    <div class="hero-actions">
+                        <button class="hero-btn primary" onclick="showTab('matches')">Voir les matchs</button>
+                        <button class="hero-btn secondary" onclick="showTab('coupons')">Mes coupons</button>
+                    </div>
                 </div>
-                <div class="coupons-count">
-                    <span>📋 Coupons en cours: <strong id="couponCount">0</strong></span>
-                </div>
-            </div>
-
-            <!-- TABS NAVIGATION -->
-            <div class="tabs">
-                <button class="tab-btn active" onclick="showTab('matches')">⚽ Matchs</button>
-                <button class="tab-btn" onclick="showTab('coupons')">🎟️ Mes Coupons</button>
-                <button class="tab-btn" onclick="showTab('history')">📊 Historique</button>
-            </div>
-
-            <!-- TAB MATCHES -->
-            <div id="matchesTab" class="tab-content active">
-                <h2>📊 Matchs du Jour</h2>
-                <div id="matchesList" class="matches-grid"></div>
-            </div>
-
-            <!-- TAB COUPONS -->
-            <div id="couponsTab" class="tab-content">
-                <h2>🎟️ Mes Coupons</h2>
-                <div class="coupons-container">
-                    <div id="couponsList" class="coupons-list"></div>
-                    <div id="couponStats" class="coupon-stats" style="display:none;">
-                        <h3>📈 Statistiques</h3>
-                        <p>Mise totale: <strong id="totalStake">0</strong> FCFA</p>
-                        <p>Gains potentiels: <strong id="potentialGain">0</strong> FCFA</p>
-                        <button onclick="validateAllCoupons()" class="btn-success">✓ Valider les Coupons</button>
-                        <button onclick="deleteAllCoupons()" class="btn-danger">🗑️ Annuler Tout</button>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span>+120</span>
+                        <small>Matchs</small>
+                    </div>
+                    <div class="hero-stat">
+                        <span>Live</span>
+                        <small>En direct</small>
+                    </div>
+                    <div class="hero-stat">
+                        <span>10000</span>
+                        <small>FCFA fictifs</small>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB HISTORIQUE -->
-            <div id="historyTab" class="tab-content">
-                <h2>📊 Historique des Transactions</h2>
-                <div id="historyList" class="history-list"></div>
+            <div class="top-toolbar">
+                <div class="balance-bar">
+                    <div class="balance-info">
+                        <span class="balance-label">💰 Solde Disponible</span>
+                        <span id="balance" class="balance-amount">0 FCFA</span>
+                    </div>
+                    <div class="coupons-count">
+                        <span>📋 Coupons en cours: <strong id="couponCount">0</strong></span>
+                    </div>
+                </div>
+                <div class="quick-promo">🚀 Bonus de bienvenue • 10 000 FCFA fictifs</div>
+            </div>
+
+            <div class="sport-categories">
+                <button class="category-chip active">⚽ Football</button>
+                <button class="category-chip">🏀 Basket</button>
+                <button class="category-chip">🎾 Tennis</button>
+                <button class="category-chip">🏏 Cricket</button>
+                <button class="category-chip">🎮 Esports</button>
+            </div>
+
+            <div class="main-layout">
+                <div class="content-column">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="showTab('matches')">⚽ Matchs</button>
+                        <button class="tab-btn" onclick="showTab('coupons')">🎟️ Mes Coupons</button>
+                        <button class="tab-btn" onclick="showTab('history')">📊 Historique</button>
+                    </div>
+
+                    <div id="matchesTab" class="tab-content active">
+                        <h2>📊 Matchs du Jour</h2>
+                        <div id="matchesList" class="matches-grid"></div>
+                    </div>
+
+                    <div id="couponsTab" class="tab-content">
+                        <h2>🎟️ Mes Coupons</h2>
+                        <div class="coupons-container">
+                            <div id="couponsList" class="coupons-list"></div>
+                            <div id="couponStats" class="coupon-stats" style="display:none;">
+                                <h3>📈 Statistiques</h3>
+                                <p>Mise totale: <strong id="totalStake">0</strong> FCFA</p>
+                                <p>Gains potentiels: <strong id="potentialGain">0</strong> FCFA</p>
+                                <button onclick="validateAllCoupons()" class="btn-success">✓ Valider les Coupons</button>
+                                <button onclick="deleteAllCoupons()" class="btn-danger">🗑️ Annuler Tout</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="historyTab" class="tab-content">
+                        <h2>📊 Historique des Transactions</h2>
+                        <div id="historyList" class="history-list"></div>
+                    </div>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="side-card">
+                        <h3>🔥 Coupon du jour</h3>
+                        <div class="side-item"><span>PSG - OM</span><strong>1.45</strong></div>
+                        <div class="side-item"><span>Real Madrid - Barça</span><strong>1.85</strong></div>
+                        <div class="side-item"><span>Man City - Arsenal</span><strong>2.10</strong></div>
+                        <button class="hero-btn primary full" onclick="buildDailyCoupon()">⚡ Charger le coupon du jour</button>
+                    </div>
+
+                    <div class="side-card">
+                        <h3>� Missions du jour</h3>
+                        <div id="missionsList" class="missions-list"></div>
+                    </div>
+
+                    <div class="side-card">
+                        <h3>�🏆 Classement</h3>
+                        <div id="leaderboard" class="leaderboard-list"></div>
+                    </div>
+
+                    <div class="side-card">
+                        <h3>⭐ Matchs recommandés</h3>
+                        <div id="recommendedMatches" class="leaderboard-list"></div>
+                    </div>
+                </aside>
             </div>
         </div>
     </div>
