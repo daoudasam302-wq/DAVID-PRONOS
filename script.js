@@ -4,6 +4,11 @@ let selectedOdd = null;
 let selectedMatch = null;
 let currentBetMatch = null;
 let apiFootballKey = localStorage.getItem('apiFootballKey') || '5f8bdb8a41a86dd0bc2140e5a56bf529';
+const dailyCoupon = [
+    { team1: 'PSG', team2: 'Marseille', odd: 1.45, label: 'Victoire 1' },
+    { team1: 'Real Madrid', team2: 'Barça', odd: 1.85, label: 'Victoire 1' },
+    { team1: 'Man City', team2: 'Arsenal', odd: 2.10, label: 'Victoire 1' }
+];
 
 // Matchs fictifs avec catégories : live, à venir et historiques
 const mockMatches = [
@@ -20,6 +25,35 @@ const mockMatches = [
 ];
 
 // ========== AUTHENTIFICATION ==========
+let currentAuthMode = 'login';
+
+function showAuthMode(mode) {
+    currentAuthMode = mode;
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.mode === mode);
+    });
+
+    const title = document.getElementById('authTitle');
+    const primaryBtn = document.getElementById('authPrimaryBtn');
+    const secondaryBtn = document.getElementById('authSecondaryBtn');
+
+    if (!title || !primaryBtn || !secondaryBtn) return;
+
+    if (mode === 'signup') {
+        title.textContent = 'Créer un compte';
+        primaryBtn.textContent = 'Créer mon compte';
+        primaryBtn.onclick = signup;
+        secondaryBtn.textContent = 'J’ai déjà un compte';
+        secondaryBtn.onclick = () => showAuthMode('login');
+    } else {
+        title.textContent = 'Connexion';
+        primaryBtn.textContent = 'Se connecter';
+        primaryBtn.onclick = login;
+        secondaryBtn.textContent = 'Créer un compte';
+        secondaryBtn.onclick = () => showAuthMode('signup');
+    }
+}
+
 function signup() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -79,6 +113,8 @@ function login() {
     
     loadUserData();
     loadMatches();
+    updateLeaderboard();
+    updateRecommendedMatches();
 }
 
 function logout() {
@@ -98,11 +134,22 @@ function loadUserData() {
 
     if (!user) return;
 
+    if (!user.bonusClaimed) {
+        user.balance += 500;
+        user.bonusClaimed = true;
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    ensureUserMissions(user);
+    progressMission('login', 1, true);
+
     document.getElementById('balance').textContent = user.balance.toLocaleString('fr-FR') + ' FCFA';
     document.getElementById('couponCount').textContent = user.coupons.length;
     
     loadCoupons();
     loadHistory();
+    updateLeaderboard();
+    renderMissions();
 }
 
 function saveUserData() {
@@ -112,6 +159,132 @@ function saveUserData() {
     if (user) {
         localStorage.setItem('users', JSON.stringify(users));
         loadUserData();
+    }
+}
+
+function buildDailyCoupon() {
+    const container = document.getElementById('leaderboard');
+    container.innerHTML = '';
+    dailyCoupon.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'leader-row';
+        row.innerHTML = `<span>${item.team1} - ${item.team2}</span><strong>${item.odd.toFixed(2)}</strong>`;
+        container.appendChild(row);
+    });
+    alert('⚡ Coupon du jour chargé avec succès');
+}
+
+function updateLeaderboard() {
+    const leaderboard = document.getElementById('leaderboard');
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const list = Object.entries(users).map(([email, user]) => ({ email, balance: user.balance || 0, coupons: user.coupons?.length || 0 })).sort((a, b) => b.balance - a.balance);
+
+    leaderboard.innerHTML = '';
+    list.slice(0, 5).forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'leader-row';
+        row.innerHTML = `<span>#${index + 1} ${item.email}</span><strong>${item.balance.toLocaleString('fr-FR')} FCFA</strong>`;
+        leaderboard.appendChild(row);
+    });
+}
+
+function updateRecommendedMatches() {
+    const container = document.getElementById('recommendedMatches');
+    container.innerHTML = '';
+    const sample = [
+        { name: 'PSG - Marseille', odd: '1.45' },
+        { name: 'Real Madrid - Barça', odd: '1.85' },
+        { name: 'Man City - Arsenal', odd: '2.10' }
+    ];
+    sample.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'leader-row';
+        row.innerHTML = `<span>${item.name}</span><strong>${item.odd}</strong>`;
+        container.appendChild(row);
+    });
+}
+
+function ensureUserMissions(user) {
+    if (!user) return [];
+
+    if (!Array.isArray(user.missions)) {
+        user.missions = [
+            { id: 'login', title: 'Connexion du jour', description: 'Connecte-toi une fois', reward: 500, target: 1, progress: 0, completed: false, claimed: false },
+            { id: 'bet', title: 'Parie 3 fois', description: 'Place 3 paris différents', reward: 1500, target: 3, progress: 0, completed: false, claimed: false },
+            { id: 'coupon', title: 'Valide un coupon', description: 'Valide au moins un coupon', reward: 1000, target: 1, progress: 0, completed: false, claimed: false }
+        ];
+    }
+
+    return user.missions;
+}
+
+function renderMissions() {
+    const container = document.getElementById('missionsList');
+    if (!container) return;
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+    if (!user) return;
+
+    const missions = ensureUserMissions(user);
+    container.innerHTML = '';
+
+    missions.forEach(mission => {
+        const progressPercent = Math.min(100, Math.round((mission.progress / mission.target) * 100));
+        const isDone = mission.progress >= mission.target;
+        const row = document.createElement('div');
+        row.className = `mission-item ${isDone ? 'completed' : ''}`;
+        row.innerHTML = `
+            <div class="mission-top">
+                <strong>${mission.title}</strong>
+                <span>${isDone ? '✅' : `${mission.progress}/${mission.target}`}</span>
+            </div>
+            <div class="mission-desc">${mission.description}</div>
+            <div class="mission-bar"><span style="width:${progressPercent}%"></span></div>
+            <div class="mission-reward">Récompense: +${mission.reward.toLocaleString('fr-FR')} FCFA</div>
+        `;
+        container.appendChild(row);
+    });
+}
+
+function progressMission(missionId, amount = 1, silent = false) {
+    if (!currentUser) return;
+
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[currentUser];
+    if (!user) return;
+
+    const missions = ensureUserMissions(user);
+    const mission = missions.find(item => item.id === missionId);
+    if (!mission || mission.claimed || mission.progress >= mission.target) {
+        renderMissions();
+        return;
+    }
+
+    mission.progress = Math.min(mission.target, mission.progress + amount);
+
+    if (mission.progress >= mission.target) {
+        mission.completed = true;
+        mission.claimed = true;
+        user.balance += mission.reward;
+        user.history.push({
+            type: 'mission',
+            amount: mission.reward,
+            description: `Mission réussie : ${mission.title}`,
+            date: new Date().toLocaleString('fr-FR')
+        });
+
+        if (!silent) {
+            alert(`🎉 Mission réussie ! +${mission.reward.toLocaleString('fr-FR')} FCFA`);
+        }
+    }
+
+    localStorage.setItem('users', JSON.stringify(users));
+    renderMissions();
+
+    const balanceEl = document.getElementById('balance');
+    if (balanceEl) {
+        balanceEl.textContent = user.balance.toLocaleString('fr-FR') + ' FCFA';
     }
 }
 
@@ -369,6 +542,7 @@ function placeBet() {
 
     user.coupons.push(coupon);
     user.balance -= amount;
+    progressMission('bet', 1);
 
     // Enregistrer l'historique
     user.history.push({
@@ -474,6 +648,10 @@ function validateAllCoupons() {
     const users = JSON.parse(localStorage.getItem('users') || '{}');
     const user = users[currentUser];
 
+    if (user.coupons.length > 0) {
+        progressMission('coupon', 1, true);
+    }
+
     user.coupons.forEach(coupon => {
         // Simulation aléatoire
         const won = Math.random() > 0.5;
@@ -574,6 +752,8 @@ function showTab(tabName) {
 
 // ========== INITIALISATION ==========
 window.addEventListener('load', () => {
+    showAuthMode('login');
+
     // Vérifier si l'utilisateur est déjà connecté
     const urlParams = new URLSearchParams(window.location.search);
     const autoLogin = urlParams.get('login');
@@ -582,4 +762,4 @@ window.addEventListener('load', () => {
         document.getElementById('email').value = 'test@example.com';
         document.getElementById('password').value = 'test123';
     }
-}); 
+});
